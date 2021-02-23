@@ -1,13 +1,13 @@
 ---
-title: "About me"
+title: "About Me"
 template: "page"
 socialImage: "/media/image-2.jpg"
 ---
 
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.
+Hi there, I'm Kristin. I do DevOps. I'm looking to get better and move faster - maybe you are too. 
 
-![Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi.](/media/image-2.jpg)
+My primary professional interests right now are Infrastructure as Code, cloud monitoring, and learning how to effectively test both of those. I'm looking to learn more about continuous deployment, traceability, and AWS data tools in 2021. 
 
-*Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi.*
+I'm also a firm believer that "glue" work is a vital part of People/Process/Products, and I take effective communication to heart. I sincerely try and write/demo/record documentation that helps developers get on-board and in production faster and with more joy!
 
-Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus
+I'm happily employed at the moment, but am actively seeking places to speak publicly throughout 2021. Please contact me on <a href="https://www.linkedin.com/in/kristinmariesmith/" target="_blank">LinkedIn</a> if I can bring value to your event.
