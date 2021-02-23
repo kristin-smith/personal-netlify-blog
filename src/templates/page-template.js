@@ -42,7 +42,7 @@ export const query = graphql`
         description
         socialImage {
           publicURL
-        }
+       }
       }
     }
   }
