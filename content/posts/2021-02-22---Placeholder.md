@@ -8,7 +8,7 @@ category: "Documentation"
 tags:
   - "Documentation"
   - "Templates"
-description: ""
+description: "This, friends, is a placeholder blog post. It out-meta's my meta."
 socialImage: "/media/image-2.jpg"
 ---
 

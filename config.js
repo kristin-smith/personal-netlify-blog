@@ -17,7 +17,7 @@ module.exports = {
     },
     {
       label: 'Blog',
-      path: '/posts'
+      path: '/'
     },
     {
       label: 'Speaking',
