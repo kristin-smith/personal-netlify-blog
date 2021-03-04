@@ -4,11 +4,12 @@ date: "2021-02-22T23:46:37.121Z"
 template: "post"
 draft: false
 slug: "5-steps-to-security-post"
-category: "Infrastructure"
+category: "Security"
 tags:
-  - "Security"
+  - "Infrastructure"
   - "AWS"
-description: "Not a full-time security professional? You can still bring value to your organization by funneling attention towards basic security hygiene. Small changes over time shift the culture."
+  - "User management"
+description: "Not a full-time security professional? You can still bring value to your organization by funneling attention towards basic security hygiene."
 socialImage: "/media/image-2.jpg"
 ---
 
@@ -18,6 +19,10 @@ In fact, at smaller companies which may not have a dedicated Security Person, al
 
 So how can we get started with improving security without titles, and without getting way down into the weeds of various algorithms and threat vectors?
 
+Two pieces of advice:
+    * Focus your initial efforts on the things that are already within your control. No budget? Focus on the free changes.
+    * Remember that small changes over time shift the culture
+    
 *******
 
 1. Unused Accounts
