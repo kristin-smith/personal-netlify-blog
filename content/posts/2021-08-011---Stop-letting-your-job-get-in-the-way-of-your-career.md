@@ -83,7 +83,9 @@ Artificial deadlines could include:
 
 * Long term – stop being such a bottleneck!
 
-If last minute requests for your time and input result in you extending your workday earlier, later, and sideways, you may be a bottleneck. What foundational training, documentation, or coaching could help your team answer more of their own questions and resolve more fires on their own? And then, because often the time needed to make those resources is it’s own blocker, can any of that be outsourced? This situation came up recently and caused a sizable delay until the senior engineer realized he didn’t have to create his own training program – it was actually cheaper and faster to put everyone through the same MOOC course on a particular technical component and then have the engineers write up the plan for how to implement within the company.
+If last minute requests for your time and input result in you extending your workday earlier, later, and sideways, you may be a bottleneck. What foundational training, documentation, or coaching could help your team answer more of their own questions and resolve more fires on their own? And then, because often the time needed to make those resources is it’s own blocker, can any of that be outsourced? 
+
+This situation came up recently and caused a sizable delay until the senior engineer realized he didn’t have to create his own training program – it was actually cheaper and faster to put everyone through the same MOOC course on a particular technical component and then have the engineers write up the plan for how to implement within the company.
 
 ## If you need to expand the Content or Scope of your training and development:
 Identify two learning areas (maybe one technical and one leadership) that you see as totally unrelated to your current role. Focus on identifying relatively small training investments that would help you gain a broader understanding of the topic. 
@@ -104,7 +106,6 @@ Even if it doesn't feel like it every day -- because some forces are legitimatel
 
 *******
 
-*******
 ### P.S.
 If you’re really into parallel structure in posts, you’ll already have noticed I offered no concrete steps on guarding your energy. This is going to be a big area of focus for me in 2021, so I’ll hold off on any advice until I feel I’ve taken big concepts and figured out how to work them into my life. If you have any suggestions (personal practices, resources, inspiring people), please let me know in the comments!
      
