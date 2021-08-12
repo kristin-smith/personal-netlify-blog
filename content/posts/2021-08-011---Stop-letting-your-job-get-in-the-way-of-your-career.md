@@ -18,9 +18,9 @@ socialImage: "/media/kai-pilger-stop-signal"
 
 Oh no.
 
-I sat anxiously awaiting the moment the facilitator would call my name and I would have to unmute myself on Zoom to answer. I hadn’t done either of the two things I had enthusiastically “committed” to doing for this call, right here, today. How was I going to catch up, much less take on new tasks?
+I sat anxiously awaiting the moment the facilitator would call my name and I would have to unmute myself on Zoom to answer. I hadn’t done either of the two things I had enthusiastically “committed” to doing back in July for this call, right here, today. How was I going to catch up, much less take on new tasks?
 
-This was a mentorship call focused on women in technical roles trying to level up out of our current roles and establish ourselves professionally – I WANTED to be here, taking full advantage of this opportunity and yet I wasn’t.
+This was a mentorship call focused on women in technical roles trying to level up and establish ourselves professionally – I WANTED to be here, taking full advantage of this opportunity and yet I wasn’t.
 
 By the time I clicked the button to speak, I already knew the answer was to shift my priorities in a subtle but important way. And so I opened with the truth:
 
@@ -41,7 +41,9 @@ But jobs are in flux. Even the best teams experience turnover. New opportunities
 
 ## You unintentionally let your day job bleed over into the time you meant to spend on your personal development
 
-Do you plan to work on your portfolio, or that self-paced course, or the blog post after work but then find yourself answering one last email or reviewing on more PR and poof that time has vanished? I did (do?) this. In the spirit of “breaking things into bite-sized chunks”, I scheduled professional development time in 30 minute intervals that disappeared into thin air every time a 5:45pm Slack message came in. Especially in distributed teams where other people may be working later than you plan to, it’s so easy to give up that time to take care of one more thing, unblock one more person. I enjoy my job and close collaboration with my teammates (and newer hires in particular), but constantly negating my own self-development serves no one.
+Do you plan to work on your portfolio, or that self-paced course, or the blog post after work but then find yourself answering one last email or reviewing on more PR and poof that time has vanished? 
+
+I did this - and I'm vowing to do it far less moving forward. In the spirit of “breaking things into bite-sized chunks”, I scheduled professional development time in 30 minute intervals that disappeared into thin air every time a 5:45pm Slack message came in. Especially in distributed teams where other people may be working later than you plan to, it’s so easy to give up that time to take care of one more thing, unblock one more person. I enjoy my job and close collaboration with my teammates (and newer hires in particular), but constantly negating my own self-development serves no one.
 
 ## You exhaust your mental energy before you tackle your personal projects
 
@@ -100,7 +102,7 @@ To re-iterate, job stresses are seductive in their urgency and importance. But t
 
 ne way of phrasing my career goals is that I always want choice - choice of what team to be on, choice of where I get to live, freedom and flexibility to also pursue my other interests and callings. Professional development keeps me competitive and able to negotiate those choices. 
 
-THIS CAN FEEL VERY SELFISH! However, the parallel benefit to me working on my professional future is almost always that my current team benefits. Learning new tehnologies, approaches, communication tactics, etc positively spill over into my role and tend to draw from broader sources than the things I learn when I focus exclusively on my day job. PProfessional development is therefore mutually beneficial to my future and present selves and colleagues.
+THIS CAN FEEL VERY SELFISH! However, the parallel benefit to me working on my professional future is almost always that my current team benefits. Learning new tehnologies, approaches, communication tactics, etc positively spill over into my role and tend to draw from broader sources than the things I learn when I focus exclusively on my day job. Professional development is therefore mutually beneficial to my future and present selves and colleagues.
 
 Even if it doesn't feel like it every day -- because some forces are legitimately outside our control and some days it feels like taking two hours at night to not be in the queue is "bad" -- we can work towards feeling this balance more days than not. 
 
