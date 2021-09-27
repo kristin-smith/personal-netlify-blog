@@ -1,0 +1,21 @@
+How-to implement Honeycomb's OpenTelemetry collector for metrics
+
+Hello, welcome. Take a deep breath. I know you're excited (I'm excited!) to start cost-effectively sending metrics to Honeycomb. I promise I'll keep the fluff to a minimum.
+
+Overview:
+Honeycomb metrics are generally available as of September 8, 2021 (https://www.honeycomb.io/blog/metrics-ga-announcement-2021/) which means anybody with access to a Prometheus instance and a trial Honeycomb account can now explore this powerful feature (https://docs.honeycomb.io/getting-data-in/metrics/prometheus/) in 20 minutes. However, if you're running Honeycomb metrics at scale, the number of metric events flooding into your Honeycomb dataset can pretty quickly chew through your event bucket. Yes, we need to invest in observability (https://www.honeycomb.io/blog/how-much-should-my-observability-stack-cost/) in real time and real dollars to reap its full benefits. But events can and should also be "worth the calories" (thanks GBBO, I missed you). In other words, if there's a way to get the same data but pay  a little bit less, we should DO THAT.
+
+Honeycomb's engineering team is in the process of contributing a new time stamp processor to the OpenTelemetry Collector that will help pack more metrics data into the same event. How? In the README (https://github.com/honeycombio/opentelemetry-collector-configs/tree/main/timestampprocessor), there's a very understated one-liner: "The timestamp processor will round all timestamps in metrics streams to the nearest <duration>." Based on conversations with Customer Success, implementing this time stamp processor versus the default time stamp behavior in the OpenTelemetry Collector can reduce the number of events sent by 20-40x. That's a huge cost savings over the course of the year. 
+
+So, let's make that happen. It does require a little extra work but we'll do a step by step guide and you should be on your way. 
+
+The metrics bucket brigade (optional, but helpful for understanding what you're building in your environment):
+
+Steps:
+* set up an environment to build the Honeycomb OpenTelemetry collector
+	* dependencies, go version
+* set up an opentelemetry collector instance
+* build the collector
+* transfer the opentelemetry collector to the collector instance
+* update the startup scripts to use your custom collector
+* start the instance/check health/validate metrics in your dataset
