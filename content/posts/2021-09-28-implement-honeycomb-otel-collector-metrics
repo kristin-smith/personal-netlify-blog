@@ -10,8 +10,8 @@ tags:
   - "Honeycomb"
   - "Metrics"
   - "Prometheus"
-description: ""
-socialImage: "/media/<image>"
+description: "Send metrics to Honeycomb without blowing up your event bucket"
+socialImage: "/media/kelly-sikkema-kid-with-crayons.jpg"
 ---
 
 # How-to implement Honeycomb's OpenTelemetry collector for metrics
@@ -19,9 +19,15 @@ socialImage: "/media/<image>"
 Hello, welcome. Take a deep breath. I know you're excited (I'm excited!) to start cost-effectively sending metrics to Honeycomb. I promise I'll keep the fluff to a minimum.
 
 ## Honeycomb Metrics Overview:
-Honeycomb metrics are <a href="https://www.honeycomb.io/blog/metrics-ga-announcement-2021/" target="_blank">generally available as of September 8, 2021</a> which means anybody with access to a Prometheus instance and a trial Honeycomb account can now <a href="https://docs.honeycomb.io/getting-data-in/metrics/prometheus/" target="_blank"> explore this powerful feature</a> in under 30 minutes. However, if you're running Honeycomb metrics at scale, the number of metric events flooding into your Honeycomb dataset can pretty quickly chew through your event bucket. Yes, we need to invest real time and real dollars into observability to reap its full benefits. But events can and should also be "worth the calories" (thanks GBBO, I missed you). In other words, if there's a way to get the same data but pay  a little bit less, we should DO THAT.
+Honeycomb metrics are <a href="https://www.honeycomb.io/blog/metrics-ga-announcement-2021/" target="_blank">generally available as of September 8, 2021</a> which means anybody with access to a Prometheus instance and a trial Honeycomb account can now <a href="https://docs.honeycomb.io/getting-data-in/metrics/prometheus/" target="_blank"> explore this powerful feature</a> in under 30 minutes.
+
+This is terribly exciting, especially since I spend more of my direct worrying time on infrastructure than application errors. Metrics, especially the Prometheus and Clouudwatch metrics that make up the backbone of our old monitoring and alerting system, are <em>often</em> correlated to application issues but it's been clunky to still be operating in multiple tools to draw those conclusions.
+
+![A child with crayons enthusiastically spread out everywhere - let's get ready to make reliability art!](/media/kelly-sikkema-kid-with-crayons.jpg)
 
 ## Metrics, Money, and Custom Collectors:
+However, if you're running Honeycomb metrics at scale, the number of metric events flooding into your Honeycomb dataset can pretty quickly chew through your event bucket. Yes, we need to invest real time and real dollars into observability to reap its full benefits. But events can and should also be "worth the calories" (thanks GBBO, I missed you). In other words, if there's a way to get the same data but pay  a little bit less, we should DO THAT.
+
 Honeycomb's engineering team is in the process of contributing a new time stamp processor to the OpenTelemetry Collector that will help pack more metrics data into the same event. How? In the <a href="https://github.com/honeycombio/opentelemetry-collector-configs/tree/main/timestampprocessor" target="_blank">README.md</a>, there's a very understated one-liner: "The timestamp processor will round all timestamps in metrics streams to the nearest <duration>." Based on conversations with Customer Success, implementing this time stamp processor versus the default time stamp behavior in the OpenTelemetry Collector can reduce the number of events sent by 20-40x. That's a huge cost savings over the course of the year.
 
 So, let's make that happen. It does require a little extra work! But we'll do a step by step guide and you should be on your way.
@@ -39,14 +45,15 @@ So, let's make that happen. It does require a little extra work! But we'll do a 
 <pre>```
 [ec2-user@builder /home/ec2-user]:
 sudo -i
-yum update && yum install python3-pip jq git
+yum update && yum install python3-pip jq go
 pip3 install yq
 ## need to install go 1.17 to work with the version 0.35.0 of the opentelemetry-collector-builder
+yum remove go
 wget https://golang.org/dl/go1.17.1.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.17.1.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 wget https://github.com/open-telemetry/opentelemetry-collector-builder/releases/download/v0.35.0/opentelemetry-collector-builder_0.35.0_linux_amd64
-mv -r ~/opentelemetry-collector-builder_0.35.0_linux_amd64 /usr/bin/opentelemetry-collector-builder
+mv ~/opentelemetry-collector-builder_0.35.0_linux_amd64 /usr/bin/opentelemetry-collector-builder
 chmod 755 /usr/bin/opentelemetry-collector-builder
 ```</pre>
    </li>
@@ -83,7 +90,7 @@ which opentelemetry-collector-builder
 
 ### 4. Set up an opentelemetry collector instance
 <ol>
-    <li>Provision an EC2 instance based on AWS's Linux 2 AMI (ami-087c17d1fe01783150)</li>
+    <li>Provision an EC2 instance based on AWS's Linux 2 AMI (ami-087c17d1fe01783150). t2.micros will run out of memory, so I recommend t2.small or higher</li>
     <li>Install dependencies (systemctl) and the otel-collector RPM from the OpenTelemetry repository</li>
 <li><pre>```
 [ec2-user@collector /home/ec2-user]:
@@ -122,7 +129,12 @@ sudo systemctl status otel-collector
 
 ### 8. Check health and validate metrics in your dataset
 <ul>
-<li>Check on your assigned dataset in Honeycomb.io - hopefully you're seeing data coming in.</li>
+<li>And now....check on your assigned dataset in Honeycomb.io - hopefully you're seeing data coming in!
+![A chart of metrics starting at no incoming metric data and then suddenly jumping up](/media/validate-prometheus-in-honeycomb.png)
+</li>
 <li>It will be spiky! Check out these tips for <a href="https://docs.honeycomb.io/getting-data-in/metrics/#step-2-query-your-metric-data" target="_blank">smoothing out your query view</a>.</li>
 </ul>
 
+----------
+
+You've now successfully implemented the new Honeycomb Metrics collector and are sending data efficiently into your observability hub! I wish you the best as you and your team start to dig into your new findings!
