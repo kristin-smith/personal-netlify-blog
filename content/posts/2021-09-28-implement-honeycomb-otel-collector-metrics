@@ -4,7 +4,7 @@ date: "2021-09-28T09:36:37.121Z"
 template: "post"
 draft: true
 slug: "honeycomb-otel-metrics-collector-post"
-category: "Observabiilty"
+category: "Observability"
 tags:
   - "Infrastructure"
   - "Honeycomb"
@@ -187,4 +187,4 @@ sudo systemctl status otel-collector
 
 ----------
 
-You've now successfully implemented the new Honeycomb Metrics collector and are sending data efficiently into your observability hub! I wish you the best as you and your team start to dig into your new findings!
+You've now successfully implemented the new Honeycomb Metrics collector and are sending data efficiently into your observability hub! I wish you the best as you and your team start to dig into your new findings.
