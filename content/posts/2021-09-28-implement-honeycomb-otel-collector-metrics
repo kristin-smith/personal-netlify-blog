@@ -32,74 +32,60 @@ So, let's make that happen. It does require a little extra work! But we'll do a 
 ## Implementation Steps:
 <em>Note: I'm going to be running this all on AWS EC2 instances to get started. If you're using a different provider, please make the necessary adjustments, but the basic concepts will still hold up.</em>
 
-<ol>
-<li>
-### Set up an environment to build the Honeycomb OpenTelemetry collector
- <ol>
-    <li>
-        Provision an EC2 instance based on AWS's Linux 2 AMI (ami-087c17d1fe01783150)
-    </li>
-    <li>
-```
+### 1. Set up an environment to build the Honeycomb OpenTelemetry collector
+  <ol>
+    <li>Provision an EC2 instance based on AWS's Linux 2 AMI (ami-087c17d1fe01783150)</li>
+    <li> Install dependencies. Note  that Go version 1.17 is necessary to build the collector
+<pre>```
 [ec2-user@builder /home/ec2-user]:
 sudo -i
-yum update && yum install python3-pip jq
+yum update && yum install python3-pip jq git
 pip3 install yq
 ## need to install go 1.17 to work with the version 0.35.0 of the opentelemetry-collector-builder
 wget https://golang.org/dl/go1.17.1.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.17.1.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
-go get https://github.com/open-telemetry/opentelemetry-collector-builder/releases/download/v0.35.0/opentelemetry-collector-builder_0.35.0_linux_amd64 ~/
-cp -r ~/opentelemetry-collector-builder_0.35.0_linux_amd64 /home/ec2-user/.local/bin/opentelemetry-collector-builder
-chmod 755 /home/ec2-user/.local/bin/opentelemetry-collector-builder
-```
-  </li>
-  <li>
-Validate our dependencies
-```
+wget https://github.com/open-telemetry/opentelemetry-collector-builder/releases/download/v0.35.0/opentelemetry-collector-builder_0.35.0_linux_amd64
+mv -r ~/opentelemetry-collector-builder_0.35.0_linux_amd64 /usr/bin/opentelemetry-collector-builder
+chmod 755 /usr/bin/opentelemetry-collector-builder
+```</pre>
+   </li>
+   <li>Validate our dependencies
+<pre>```
 go version ## should be 1.17.0
 which opentelemetry-collector-builder
-```
-  </li>
+```</pre></li>
 </ol>
-<li>
-### Build the collector using Honeycomb's recommended configuration
+
+### 2. Build the collector using Honeycomb's recommended configuration
 <ol>
-<li>
-```
-[ec2-user@builder /home/ec2-user] sudo -i
-cd ./opentelemetry-collector-builder && vi .otelcol-builder.yaml
-```
-</li>
-<li>
-Your .otelcol-builder.yaml will just use the Honeycomb recommended config, including Honeycomb's custom timestampprocessor (which will compact our events)
-```
-dist:
-  module: github.com/open-telemetry/opentelemetry-collector-builder
-  include_core: true
-  otelcol_version: "0.30.0"
-processors:
-  - gomod: "github.com/open-telemetry/opentelemetry-collector-contrib/processor/metricstransformprocessor v0.30.0"
-  - gomod: "github.com/honeycombio/opentelemetry-collector-configs/timestampprocessor v0.1.0"
-```
-</li>
-<li>
-Build the actual collector for export into your collector instance
- ```.
-/opentelemetry-collector-builder --config ~/opentelemetry-collector-builder/.otelcol-builder.yaml  --name honeycomb-otel-metrics-collector
-```
+<li> Your .otelcol-builder.yaml will just use the Honeycomb recommended config, including Honeycomb's custom timestampprocessor (which will compact our events)
+`[root@builder /] vi .otelcol-builder.yaml`
+<pre>
+  dist:
+    module: github.com/open-telemetry/opentelemetry-collector-builder
+    include_core: true
+    otelcol_version: "0.30.0"
+  processors:
+    - gomod: "github.com/open-telemetry/opentelemetry-collector-contrib/processor/metricstransformprocessor v0.30.0"
+    - gomod: "github.com/honeycombio/opentelemetry-collector-configs/timestampprocessor v0.1.0"
+</pre>
 </li>
 </ol>
 
-<li>
-### Set up an opentelemetry collector instance
+### 3. Build the actual collector for export into your collector instance
 <ol>
-    <li>
-        Provision an EC2 instance based on AWS's Linux 2 AMI (ami-087c17d1fe01783150)
-    </li>
-    <li>
-        Install dependencies (systemctl) and the otel-collector RPM from the OpenTelemetry repository
-```
+<li><pre>```
+[root@builder /] opentelemetry-collector-builder --config ./.otelcol-builder.yaml  --name honeycomb-otel-metrics-collector
+```</pre>
+</li>
+</ol>
+
+### 4. Set up an opentelemetry collector instance
+<ol>
+    <li>Provision an EC2 instance based on AWS's Linux 2 AMI (ami-087c17d1fe01783150)</li>
+    <li>Install dependencies (systemctl) and the otel-collector RPM from the OpenTelemetry repository</li>
+<li><pre>```
 [ec2-user@collector /home/ec2-user]:
 sudo -i
 yum update && yum -y install wget systemctl
@@ -107,27 +93,36 @@ yum update && yum -y install wget systemctl
 wget https://github.com/open-telemetry/opentelemetry-collector/releases/download/v0.32.0/otel-collector-0.32.0-1.x86_64.rpm
 rpm -ivh otel-collector-0.32.0-1.x86_64.rpm
 vi /etc/otel-collector/config.yaml <sample config - point to relabeling post>
-```
+```</pre>
 </li>
 </ol>
-</li>
-<li>
-### Transfer the opentelemetry collector to the collector instance
-You've got options - choose whatever makes sense for your workflow (S3 transfer, scp, etc)
-</li>
-<li>
-### Update the collector service startup script
-Update the startup script that comes with the RPM to use the custom OpenTelemetry Collector we built in the last section. ExecStart should point at your custom collector (e.g. "ExecStart=/usr/bin/honeycomb-otel-metrics-collector")
-```
+### 5. Transfer the opentelemetry collector to the collector instance
+<ul><li>You've got options - choose whatever makes sense for your workflow (S3 transfer, scp, etc)</li></ul>
+
+### 6. Update the collector service startup script
+<ul>
+<li>Update the startup script that comes with the RPM to use the custom OpenTelemetry Collector we built in the last section. ExecStart should point at your custom collector (e.g. "ExecStart=/usr/bin/honeycomb-otel-metrics-collector")
+<pre>```
+[ec2-user@collector /home/ec2-user]:
 vi /usr/lib/systemd/system/otel-collector.service
-```
+```</pre>
 </li>
+</ul>
+
+### 7. Start the instance on the collector
+<ul>
 <li>
-### Start the instance/check health and validate metrics in your dataset
-<em>on the collector instance</em>
+<pre>```
+[ec2-user@collector /home/ec2-user]:
 sudo systemctl stop otel-collector
 sudo systemctl status otel-collector
-Check on your dataset in Honeycomb.io - hopefully you're seeing data coming in.
-It will be spiky! Check out these tips for <a href="https://docs.honeycomb.io/getting-data-in/metrics/#step-2-query-your-metric-data" target="_blank">smoothing out your query view</a>.
+```</pre>
 </li>
-<ol>
+</ul>
+
+### 8. Check health and validate metrics in your dataset
+<ul>
+<li>Check on your assigned dataset in Honeycomb.io - hopefully you're seeing data coming in.</li>
+<li>It will be spiky! Check out these tips for <a href="https://docs.honeycomb.io/getting-data-in/metrics/#step-2-query-your-metric-data" target="_blank">smoothing out your query view</a>.</li>
+</ul>
+
