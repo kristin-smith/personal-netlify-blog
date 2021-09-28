@@ -1,21 +1,103 @@
-How-to implement Honeycomb's OpenTelemetry collector for metrics
+---
+title: How to Implement Honeycomb's OpenTelemetry Collector for Metrics
+date: "2021-09-28T09:36:37.121Z"
+template: "post"
+draft: false
+slug: "honeycomb-otel-metrics-collector-post"
+category: "Observabiilty"
+tags:
+  - "Infrastructure"
+  - "Honeycomb"
+  - "Metrics"
+  - "Prometheus"
+description: ""
+socialImage: "/media/<image>"
+---
+
+# How-to implement Honeycomb's OpenTelemetry collector for metrics
 
 Hello, welcome. Take a deep breath. I know you're excited (I'm excited!) to start cost-effectively sending metrics to Honeycomb. I promise I'll keep the fluff to a minimum.
 
-Overview:
+Honeycomb Metrics Overview:
 Honeycomb metrics are generally available as of September 8, 2021 (https://www.honeycomb.io/blog/metrics-ga-announcement-2021/) which means anybody with access to a Prometheus instance and a trial Honeycomb account can now explore this powerful feature (https://docs.honeycomb.io/getting-data-in/metrics/prometheus/) in 20 minutes. However, if you're running Honeycomb metrics at scale, the number of metric events flooding into your Honeycomb dataset can pretty quickly chew through your event bucket. Yes, we need to invest in observability (https://www.honeycomb.io/blog/how-much-should-my-observability-stack-cost/) in real time and real dollars to reap its full benefits. But events can and should also be "worth the calories" (thanks GBBO, I missed you). In other words, if there's a way to get the same data but pay  a little bit less, we should DO THAT.
 
 Honeycomb's engineering team is in the process of contributing a new time stamp processor to the OpenTelemetry Collector that will help pack more metrics data into the same event. How? In the README (https://github.com/honeycombio/opentelemetry-collector-configs/tree/main/timestampprocessor), there's a very understated one-liner: "The timestamp processor will round all timestamps in metrics streams to the nearest <duration>." Based on conversations with Customer Success, implementing this time stamp processor versus the default time stamp behavior in the OpenTelemetry Collector can reduce the number of events sent by 20-40x. That's a huge cost savings over the course of the year. 
 
-So, let's make that happen. It does require a little extra work but we'll do a step by step guide and you should be on your way. 
+So, let's make that happen. It does require a little extra work! But we'll do a step by step guide and you should be on your way. 
 
 The metrics bucket brigade (optional, but helpful for understanding what you're building in your environment):
 
+
 Steps:
-* set up an environment to build the Honeycomb OpenTelemetry collector
+<em>Note: I'm going to be running this all on AWS EC2 instances to get started. If you're using a different provider, please make the necesssary adjustments, but the basic concepts will still hold up.</em>
+
+<ol>
+<li>
+### Set up an environment to build the Honeycomb OpenTelemetry collector
 	* dependencies, go version
-* set up an opentelemetry collector instance
-* build the collector
-* transfer the opentelemetry collector to the collector instance
-* update the startup scripts to use your custom collector
-* start the instance/check health/validate metrics in your dataset
+	[ec2-user@builder /home/ec2-user]
+	sudo -i
+	yum update && yum install python3-pip jq
+	pip3 install yq
+	## need to install go 1.17 to work with the version 0.35.0 of the opentelemetry-collector-builder
+	wget https://golang.org/dl/go1.17.1.linux-amd64.tar.gz
+    sudo tar -C /usr/local -xzf go1.17.1.linux-amd64.tar.gz
+    export PATH=$PATH:/usr/local/go/bin
+    go version
+	go get https://github.com/open-telemetry/opentelemetry-collector-builder/releases/download/v0.35.0/opentelemetry-collector-builder_0.35.0_linux_amd64 ~/
+    cp -r ~/opentelemetry-collector-builder_0.35.0_linux_amd64 /home/ec2-user/.local/bin/opentelemetry-collector-builder
+    chmod 755 /home/ec2-user/.local/bin/opentelemetry-collector-builder
+/li>
+<li>
+### Build the collector using Honeycomb's recommended configuration
+[ec2-user@builder /home/ec2-user] sudo -i
+cd ./opentelemetry-collector-builder && vi .otelcol-builder.yaml
+
+dist:
+  module: github.com/open-telemetry/opentelemetry-collector-builder
+  include_core: true
+  otelcol_version: "0.30.0"
+processors:
+  - gomod: "github.com/open-telemetry/opentelemetry-collector-contrib/processor/metricstransformprocessor v0.30.0"
+  - gomod: "github.com/honeycombio/opentelemetry-collector-configs/timestampprocessor v0.1.0"
+
+ ./opentelemetry-collector-builder --config ~/opentelemetry-collector-builder/.otelcol-builder.yaml  --name honeycomb-otel-metrics-collector
+</li>
+<li>
+### Set up an opentelemetry collector instance
+    <ol>
+    <li>
+        Provision an EC2 instance based on AWS's Linux 2 AMI (ami-087c17d1fe01783150)
+    </li>
+    <li>
+        Install dependencies (systemctl) and the otel-collector RPM from the OpenTelemetry repository
+        [ec2-user@collector /home/ec2-user]
+        sudo -i
+        yum update && yum -y install wget systemctl
+
+        wget https://github.com/open-telemetry/opentelemetry-collector/releases/download/v0.32.0/otel-collector-0.32.0-1.x86_64.rpm
+        rpm -ivh otel-collector-0.32.0-1.x86_64.rpm
+
+        vi /etc/otel-collector/config.yaml <sample config - point to relabeling post>
+    <li>
+</li>
+<li>
+### Transfer the opentelemetry collector to the collector instance
+You've got options - choose whatever makes sense for your workflow (S3 transfer, scp, etc)
+</li>
+<li>
+### Update the collector service startup script
+    Update the startup script that comes with the RPM to use the custom OpenTelemetry Collector we built in the last section
+    ExecStart should point at your custom collector (here, "honeycomb-otel-metrics-collector")
+    vi /usr/lib/systemd/system/otel-collector.service
+    ExecStart=/usr/bin/honeycomb-otel-metrics-collector
+</li>
+<li>
+### Start the instance/check health and validate metrics in your dataset
+<em>on the collector instance</em>
+sudo systemctl stop otel-collector
+sudo systemctl status otel-collector
+Check on your dataset in Honeycomb.io - hopefully you're seeing data coming in.
+It will be spiky! Check out these tips for smoothing out your query view (https://docs.honeycomb.io/getting-data-in/metrics/#step-2-query-your-metric-data)
+</li>
+<ol>
