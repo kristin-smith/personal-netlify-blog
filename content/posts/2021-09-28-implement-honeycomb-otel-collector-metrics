@@ -2,7 +2,7 @@
 title: How to Implement Honeycomb's OpenTelemetry Collector for Metrics
 date: "2021-09-28T09:36:37.121Z"
 template: "post"
-draft: false
+draft: true
 slug: "honeycomb-otel-metrics-collector-post"
 category: "Observabiilty"
 tags:
@@ -99,9 +99,59 @@ yum update && yum -y install wget systemctl
 
 wget https://github.com/open-telemetry/opentelemetry-collector/releases/download/v0.32.0/otel-collector-0.32.0-1.x86_64.rpm
 rpm -ivh otel-collector-0.32.0-1.x86_64.rpm
-vi /etc/otel-collector/config.yaml <sample config - point to relabeling post>
 ```</pre>
 </li>
+<li>Setup an initial collector config file. This is a basic sample that scrapes Prometheus data from one host and sends it via the otlp/metrics exporter and prometheus pipeline into Honeycomb.
+We won't get into all the components in this post, but <a href="https://www.kristinsmith.tech/posts/prometheus-aws-metadata-post" target="_blank">filtering and relabeling</a> are other ways to minimize the number of events while enhancing the usability of your data.
+```<pre>
+vi /etc/otel-collector/config.yaml
+```</pre>
+<pre>
+extensions:
+  health_check:
+  pprof:
+    endpoint: 0.0.0.0:1777
+  zpages:
+    endpoint: 0.0.0.0:55679
+
+receivers:
+  # Collect own metrics
+  prometheus:
+    config:
+    scrape_configs:
+        - job_name: 'otel-collector'
+          scrape_interval: 10s
+          static_configs:
+            - targets: [ '0.0.0.0:8888' ]
+
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: "production"
+          scrape_interval: 120s
+          honor_labels: true
+          static_configs:
+            - targets: ['<ip-address>:9256']
+
+processors:
+  batch:
+
+exporters:
+  logging:
+    logLevel: debug
+  otlp/metrics:
+    endpoint: "api.honeycomb.io:443"
+    headers:
+      "x-honeycomb-team": "<api_key>"
+      "x-honeycomb-dataset": "<dataset_name>"
+
+service:
+  pipelines:
+    metrics:
+      receivers: [prometheus]
+      processors: []
+      exporters: [otlp/metrics]
+</pre>
 </ol>
 ### 5. Transfer the opentelemetry collector to the collector instance
 <ul><li>You've got options - choose whatever makes sense for your workflow (S3 transfer, scp, etc)</li></ul>
