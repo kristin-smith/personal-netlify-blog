@@ -118,7 +118,6 @@ extensions:
     endpoint: 0.0.0.0:55679
 
 receivers:
-  # Collect own metrics
   prometheus:
     config:
     scrape_configs:
