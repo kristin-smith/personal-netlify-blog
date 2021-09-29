@@ -100,11 +100,9 @@ which opentelemetry-collector-builder
 [ec2-user@collector /home/ec2-user]:
 sudo -i
 yum update && yum -y install wget systemctl
-
 wget https://github.com/open-telemetry/opentelemetry-collector/releases/download/v0.32.0/otel-collector-0.32.0-1.x86_64.rpm
 rpm -ivh otel-collector-0.32.0-1.x86_64.rpm
-```</pre>
-</li>
+```</pre></li>
 
 <li>Setup an initial collector config file. This is a basic sample that scrapes Prometheus data from one host and sends it via the otlp/metrics exporter and prometheus pipeline into Honeycomb.
 We won't get into all the components in this post, but <a href="https://www.kristinsmith.tech/posts/prometheus-aws-metadata-post" target="_blank">filtering and relabeling</a> are other ways to minimize the number of events while enhancing the usability of your data.
