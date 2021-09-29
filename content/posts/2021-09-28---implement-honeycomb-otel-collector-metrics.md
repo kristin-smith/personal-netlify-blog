@@ -1,6 +1,6 @@
 ---
 title: How to Implement Honeycomb's OpenTelemetry Collector for Metrics
-date: "2021-09-28T09:36:37.121Z"
+date: "2021-09-29T10:08:37.121Z"
 template: "post"
 draft: false
 slug: "honeycomb-otel-metrics-collector-post"
