@@ -16,7 +16,11 @@ socialImage: "/media/kelly-sikkema-kid-with-crayons.jpg"
 
 # How-to implement Honeycomb's OpenTelemetry collector for metrics
 
-Hello, welcome. Take a deep breath. I know you're excited (I'm excited!) to start cost-effectively sending metrics to Honeycomb. I promise I'll keep the fluff to a minimum.
+Hello, welcome. Take a deep breath. I know you're excited (I'm excited!) to start cost-effectively sending metrics to Honeycomb.
+
+If you aren't yet familiar with Honeycomb.io is an observability tool oriented around asking questions about your system in real-time. It can consume data points from a variety of different sources (which are collectively referred to as "events") and provides a number of ways to combine these diverse datastreams to help correlate performance dips across distributed systems.
+
+Up until recently, Honeycomb provided several integrations with cloud provider APIs (eg AWS CloudWatch streams to investigate RDS performance) and logging platforms, but we hadn't been able to natively send in infrastructure metrics. That gap has now been closed!
 
 ## Honeycomb Metrics Overview:
 Honeycomb metrics are <a href="https://www.honeycomb.io/blog/metrics-ga-announcement-2021/" target="_blank">generally available as of September 8, 2021</a> which means anybody with access to a Prometheus instance and a trial Honeycomb account can now <a href="https://docs.honeycomb.io/getting-data-in/metrics/prometheus/" target="_blank"> explore this powerful feature</a> in under 30 minutes.
@@ -32,8 +36,8 @@ Honeycomb's engineering team is in the process of contributing a new time stamp 
 
 So, let's make that happen. It does require a little extra work! But we'll do a step by step guide and you should be on your way.
 
-## The metrics bucket brigade (optional, but helpful for understanding what you're building in your environment):
-
+## Visualizing the flow of metrics (optional, but helpful for understanding what you're building in your environment):
+![A visual flow chart tht shows a one-time step (building a metrics collector) and then inserting it into a stream of servers that sends data to Honeycomb](/media/honeycomb-otel-metrics-diagram.png)
 
 ## Implementation Steps:
 <em>Note: I'm going to be running this all on AWS EC2 instances to get started. If you're using a different provider, please make the necessary adjustments, but the basic concepts will still hold up.</em>
