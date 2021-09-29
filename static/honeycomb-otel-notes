@@ -1,0 +1,38 @@
+sudo yum update
+sudo yum install jq
+pip3 install yq
+
+wget https://golang.org/dl/go1.17.1.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.17.1.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+
+go get https://github.com/open-telemetry/opentelemetry-collector-builder/releases/download/v0.35.0/opentelemetry-collector-builder_0.35.0_linux_amd64 ~/
+cp -r ~/opentelemetry-collector-builder_0.35.0_linux_amd64 /home/ec2-user/.local/bin/opentelemetry-collector-builder
+chmod 755 /home/ec2-user/.local/bin/opentelemetry-collector-builder 
+
+
+
+make config (ok but then what is happening??????)
+
+
+dist:
+  module: github.com/open-telemetry/opentelemetry-collector-builder
+  include_core: true
+  otelcol_version: "0.30.0"
+processors:
+  - gomod: "github.com/open-telemetry/opentelemetry-collector-contrib/processor/metricstransformprocessor v0.30.0"
+  - gomod: "github.com/honeycombio/opentelemetry-collector-configs/timestampprocessor v0.1.0"
+
+
+scp ~/Documents/campspot-otel-metrics-9-26-2021 campspot-prometheus-collector-2:/home/ec2-user
+sudo systemctl stop otel-collector
+sudo vi /etc/otel-collector/config.yaml
+/usr/lib/systemd/system/otel-collector.service updated to point at ExecStart=/usr/bin/campspot-otel-metrics-9-26-2021
+
+
+starting points: 
+* https://github.com/open-telemetry/opentelemetry-collector-builder
+* https://github.com/honeycombio/opentelemetry-collector-configs/tree/main/timestampprocessor
+* https://github.com/honeycombio/opentelemetry-collector-configs
+
+ssh campspot-prometheus-collector-2 and ssh campspot-prometheus-collector
