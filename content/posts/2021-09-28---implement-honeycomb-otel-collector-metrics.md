@@ -156,6 +156,7 @@ service:
 </pre>
 </li>
 </ol>
+
 ### 5. Transfer the opentelemetry collector to the collector instance
 <ul><li>You've got options - choose whatever makes sense for your workflow (S3 transfer, scp, etc)</li></ul>
 
