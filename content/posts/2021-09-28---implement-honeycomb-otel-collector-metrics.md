@@ -105,6 +105,7 @@ wget https://github.com/open-telemetry/opentelemetry-collector/releases/download
 rpm -ivh otel-collector-0.32.0-1.x86_64.rpm
 ```</pre>
 </li>
+
 <li>Setup an initial collector config file. This is a basic sample that scrapes Prometheus data from one host and sends it via the otlp/metrics exporter and prometheus pipeline into Honeycomb.
 We won't get into all the components in this post, but <a href="https://www.kristinsmith.tech/posts/prometheus-aws-metadata-post" target="_blank">filtering and relabeling</a> are other ways to minimize the number of events while enhancing the usability of your data.
 ```<pre>
@@ -156,6 +157,7 @@ service:
       processors: []
       exporters: [otlp/metrics]
 </pre>
+</li>
 </ol>
 ### 5. Transfer the opentelemetry collector to the collector instance
 <ul><li>You've got options - choose whatever makes sense for your workflow (S3 transfer, scp, etc)</li></ul>
