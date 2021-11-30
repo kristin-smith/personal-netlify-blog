@@ -4,10 +4,10 @@ template: "page"
 socialImage: "/media/image-2.jpg"
 ---
 # Upcoming Events
- * "Dark Sky Camping: Reducing Alert Pollution with Modern Observability Practices" CMG Monitoring and Observability Nov 16, 2021. Registration open at <a href="https://www.cmg.org/2021/02/monitoring-and-observability-november-16/" target="_blank">www.cmg.org</a>
  * "Sink and Swim: When to Drop Projects to Maximize Organizational Results" with Women Who Code- Denver, CO chapter (early 2022, dates TBD)
  
 ## Past Events
+ * "Dark Sky Camping: Reducing Alert Pollution with Modern Observability Practices" CMG Monitoring and Observability (Nov 16, 2021. Virtual event)
  * "Throw it Overboard: Recovering from Sunk Costs in Technical Teams" presented by <a href="https://www.joinwest.org/" target="_blank">Women Entering and Staying in Tech</a> (September 22, 2021. Virtual event)<br>
    Missed this event? Watch the recording online
    <a href="https://www.youtube.com/watch?v=RT3kUn3xpvI" target="_blank">![title slide for Throw It Overboard Talk](/media/no-sunk-costs.png)</a>
