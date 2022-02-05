@@ -23,7 +23,7 @@ processors:
   - gomod: "github.com/open-telemetry/opentelemetry-collector-contrib/processor/metricstransformprocessor v0.30.0"
   - gomod: "github.com/honeycombio/opentelemetry-collector-configs/timestampprocessor v0.1.0"
 
-
+scp -i "~/.ssh/honeycomb-otel.pem" ec2-user@ec2-3-239-123-219.compute-1.amazonaws.com:/tmp/otelcol-distribution626343469/campspot-otel-col-2021-10-01
 scp ~/Documents/campspot-otel-metrics-9-26-2021 campspot-prometheus-collector-2:/home/ec2-user
 sudo systemctl stop otel-collector
 sudo vi /etc/otel-collector/config.yaml
