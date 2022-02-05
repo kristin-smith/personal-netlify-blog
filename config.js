@@ -3,7 +3,7 @@
 module.exports = {
   url: 'https://lumen.netlify.com',
   pathPrefix: '/',
-  title: 'Kristin Smith - communicating with techies',
+  title: 'Kristin Smith - communicating well with technologists',
   subtitle: 'DevOps personal blog to educate, hold accountable, and connect with others',
   copyright: '© All rights reserved.',
   disqusShortname: '',
@@ -26,7 +26,7 @@ module.exports = {
   ],
   author: {
     name: 'Kristin Smith',
-    photo: '/park-headshot-square.jpg',
+    photo: '/kristin-headshot-garage-doors-square.jpg',
     bio: 'DevOps hype-human, cloud engineer and  public speaker based in Richmond, Virginia',
     contacts: {
       twitter: '@KristinInTech',

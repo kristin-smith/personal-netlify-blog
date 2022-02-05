@@ -186,7 +186,7 @@ module.exports = {
         background_color: '#FFF',
         theme_color: '#F7A046',
         display: 'standalone',
-        icon: 'static/park-headshot-square.jpg'
+        icon: 'static/media/kristin-headshot-garage-doors-square.jpg'
       },
     },
     {
