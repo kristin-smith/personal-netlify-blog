@@ -26,7 +26,7 @@ module.exports = {
   ],
   author: {
     name: 'Kristin Smith',
-    photo: '/static/media//kristin-headshot-garage-doors-square.jpg',
+    photo: '/media/kristin-headshot-garage-doors-square.jpg',
     bio: 'DevOps hype-human, cloud engineer and  public speaker based in Richmond, Virginia',
     contacts: {
       twitter: '@KristinInTech',
