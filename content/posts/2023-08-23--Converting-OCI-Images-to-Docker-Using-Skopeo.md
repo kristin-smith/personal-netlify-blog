@@ -53,6 +53,7 @@ The critical flag here is "-f" which lets us specific Docker's v2s1 format inste
 ![LayerDetails block shows multiple layers with docker MIMEType](/media/skopeo-docker-mimetype.png) 
 
 Using the inspect command again to examine the image that was copied into ECR, the LayerDetails now show docker rather than OCI in the MIMEType.    
+
 This image is ready to be used alongside other Docker images in our docker-compose script!
 
 
