@@ -3,11 +3,10 @@ title: "Speaking"
 template: "page"
 socialImage: "/media/kristin-headshot-sitting.jpg"
 ---
-# Upcoming Events
- * "Dark Sky Camping: Reducing Alert Pollution with Modern Observability Practices" SRECon 2022 - Americas (March 14-16, <a href="https://www.usenix.org/conference/srecon22americas"  target="_blank">Registration now open!</a>)
- * "Hope and Heartbreak in Software Development: Coping When Projects End" with Women Who Code- Denver, CO chapter (Spring 2022, dates TBD)
  
 ## Past Events
+ * "Hope and Heartbreak in Software Development: Coping When Projects End" with Women Who Code- Denver, CO chapter (May 18, 2022)
+ * "Dark Sky Camping: Reducing Alert Pollution with Modern Observability Practices" SRECon 2022 - Americas (March 14-16, 2022)
  * "Dark Sky Camping: Reducing Alert Pollution with Modern Observability Practices" CMG Monitoring and Observability (Nov 16, 2021. Virtual event)
  * "Throw it Overboard: Recovering from Sunk Costs in Technical Teams" presented by <a href="https://www.joinwest.org/" target="_blank">Women Entering and Staying in Tech</a> (September 22, 2021. Virtual event)<br>
    Missed this event? Watch the recording online
