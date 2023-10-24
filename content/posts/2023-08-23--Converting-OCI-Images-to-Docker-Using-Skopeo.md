@@ -2,7 +2,7 @@
 title: Converting public images from OCI to Docker with Skopeo
 date: "2023-08-19T23:46:37.121Z"
 template: "post"
-draft: true
+draft: false
 slug: "convert-oci-image-to-docker-aws-ecr"
 category: "Containerization"
 tags:
